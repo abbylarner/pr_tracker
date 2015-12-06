@@ -34,7 +34,6 @@ document.getElementById('register-submit').addEventListener('click', function(e)
 	user.signUp(null, {
 		success: function(user) {
 			hidePages();
-			logout();
 			document.getElementById('dashboardPage').style.display = 'block';
 		},
 		error: function(user, error) {
@@ -73,7 +72,6 @@ document.getElementById('login-submit').addEventListener('click', function(e) {
 		success: function(user) {
 			hidePages();
 			logout();
-			findPrs();
 			document.getElementById('dashboardPage').style.display = 'block';
 		},
 		error: function(user, error) {
@@ -345,14 +343,15 @@ function findSettings() {
 	settingsQuery.include('user');
 	settingsQuery.find({
 		success: function(results) {
-			var object = results[i];
-			if (object.get('user').get('weightSetting') === 'kilograms') {
-				lbSetting.classList.remove('active');
-				kgSetting.classList.add('active');
-			} else {
-				lbSetting.classList.add('active');
-				kgSetting.classList.remove('active');
-			}
+				var object = results[i];
+				console.log(object);
+					if (object.get('user').get('weightSetting') === 'kilograms') {
+						lbSetting.classList.remove('active');
+						kgSetting.classList.add('active');
+					} else {
+						lbSetting.classList.add('active');
+						kgSetting.classList.remove('active');
+					}
 		},
 		error: function(error) {
 			alert('There was an error');
@@ -458,8 +457,9 @@ document.getElementById('pr-submit').addEventListener('click', function(e) {
 });
 
 //Settings Page
-findSettings();
+
 document.getElementById('settings').addEventListener('click', function(e) {
+	findSettings();
 	hidePages();
 	logout();
 	document.getElementById('settingsPage').style.display = 'block';
