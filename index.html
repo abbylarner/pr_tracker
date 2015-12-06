@@ -72,7 +72,7 @@
 								        <h4 class="modal-title" id="myModalLabel">Add New PR</h4>
 								      </div>
 								      <div class="modal-body">
-								       	<form action="POST" id="newPr">
+								       	<form method="POST" id="newPr">
 								       		<input type="text" placeholder="Lift Name" id="liftName" class="form-control">
 								       		<div class="btn-group" role="group">
 											  <button type="button" class="btn btn-default active" id="new-kilograms">Kilograms</button>
@@ -98,6 +98,27 @@
 								<div class="btn-group" role="group">
 								  <button type="button" class="btn btn-default" id="settings-kg">Kilograms</button>
 								  <button type="button" class="btn btn-default" id="settings-lbs">Pounds</button>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div id="internalPage" class="page">
+						<div class="row">
+							<div class="col-xs-12">
+								<h1 id="title">
+								</h1>
+								<div class="calculate">
+									<p>Calculate a percentage of your max</p>
+									<form method="POST" id="percentage">
+										<input type="number" placeholder="Enter Percentage" id="percentage-input">
+									</form>
+									<div class="calc-results">
+									</div>
+								</div> 
+								<div class="currentPR">
+									<p>125lb</p>
+									<p>12/05/15</p>
+									<button type="submit" id="pr-update" class="btn btn-primary">Update PR</button>
 								</div>
 							</div>
 						</div>

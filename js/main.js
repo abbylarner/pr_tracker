@@ -9,16 +9,17 @@ function hasClass(element, cls) {
 	return (' ' + element.className + ' ').indexOf(' ' + cls + ' ') > -1;
 }
 
-function hidePages(){
+function hidePages() {
 	var pages = document.getElementsByClassName('page');
-	for(i = 0; i < pages.length; i++){
+	for (i = 0; i < pages.length; i++) {
 		pages[i].style.display = 'none';
 	}
 }
 
-function logout(){
+function logout() {
 	document.getElementById('logout').style.display = 'block';
 }
+
 
 //Sign Up
 var user = new Parse.User();
@@ -104,6 +105,13 @@ document.getElementById('logo').addEventListener('click', function(e) {
 	findPrs();
 	document.body.scrollTop = document.documentElement.scrollTop = 0;
 	document.getElementById('dashboardPage').style.display = 'block';
+
+	//Prevent anchor jump on dashboard
+	if (currentPageHash) {
+		setTimeout(function() {
+			window.scrollTo(0, 0);
+		}, 1);
+	}
 });
 
 //Get user PR's
@@ -116,14 +124,37 @@ function findPrs() {
 		success: function(results) {
 			for (var i = 0; i < results.length; i++) {
 				var object = results[i];
-				if(object.get('user').get('weightSetting') === 'kilograms'){
-					prResults += '<h3>' + object.get('liftName') + ' </h3><p> ' + object.get('liftWeight') + ' kg</p><p>' + object.get('prDate')	
-				}
-				else{
-					prResults += '<h3>' + object.get('liftName') + ' </h3><p>' + parseFloat((object.get('liftWeight')*2.2046*100)/100).toFixed(2) + ' lbs</p>'  + object.get('prDate')
+				if (object.get('user').get('weightSetting') === 'kilograms') {
+					prResults += '<div class="pr-item" data-id="' + object.id + '"><h3>' + object.get('liftName') + ' </h3><p> ' + object.get('liftWeight') + ' kg</p><p>' + object.get('prDate') + '</div>'
+				} else {
+					prResults += '<div class="pr-item"><h3>' + object.get('liftName') + ' </h3><p>' + parseFloat((object.get('liftWeight') * 2.2046 * 100) / 100).toFixed(2) + ' lbs</p>' + object.get('prDate') + '</div>'
 				}
 			}
 			document.getElementById('results').innerHTML = prResults
+
+
+			//Internal Pagesa
+			var prItems = document.getElementsByClassName('pr-item');
+
+			for (i = 0; i < prItems.length; i++) {
+				var prObject = prItems[i];
+
+				prObject.addEventListener('click', function(e) {
+					hidePages();
+					logout();
+					document.getElementById('internalPage').style.display = 'block';
+
+					for (i = 0; i < results.length; i++) {
+						var object = results[i];
+
+						if (object.id === this.dataset.id) {
+							document.getElementById('title').innerHTML = object.get('liftName');
+						}
+					}
+
+				});
+			}
+
 		},
 		error: function(error) {
 			alert("Error: " + error.code + " " + error.message);
@@ -141,11 +172,10 @@ function findSettings() {
 	settingsQuery.find({
 		success: function(results) {
 			var object = results[i];
-			if(object.get('user').get('weightSetting') === 'kilograms'){
+			if (object.get('user').get('weightSetting') === 'kilograms') {
 				lbSetting.classList.remove('active');
 				kgSetting.classList.add('active');
-			}
-			else {
+			} else {
 				lbSetting.classList.add('active');
 				kgSetting.classList.remove('active');
 			}
@@ -179,14 +209,14 @@ document.getElementById('pr-submit').addEventListener('click', function(e) {
 	var liftWeight = parseFloat(document.getElementById('liftWeight').value);
 
 	function isEmpty(str) {
-	  return str.replace(/^\s+|\s+$/g, '').length == 0;
+		return str.replace(/^\s+|\s+$/g, '').length == 0;
 	}
 
 	var duplicateQuery = new Parse.Query('prObject');
 	duplicateQuery.find({
 		success: function(results) {
 			var err = false;
-			
+
 			for (var i = 0; i < results.length; i++) {
 				var object = results[i];
 				var liftResult = object.get('liftName').toLowerCase();
@@ -194,13 +224,13 @@ document.getElementById('pr-submit').addEventListener('click', function(e) {
 
 				if (liftResult === inputResult || isEmpty(inputResult)) {
 					err = true;
-				 } 
+				}
 			}
 
 			if (hasClass(kilograms, 'active') === true) {
 				prObject.set("liftMetric", "kilograms");
 			} else {
-				var convertedWeight = parseFloat((liftWeight/2.2046*100)/100).toFixed(2);
+				var convertedWeight = parseFloat((liftWeight / 2.2046 * 100) / 100).toFixed(2);
 				prObject.set("liftMetric", "pounds");
 			}
 
@@ -216,26 +246,24 @@ document.getElementById('pr-submit').addEventListener('click', function(e) {
 			} else if (hasClass(kilograms, 'active') === true) {
 				prObject.set("liftMetric", "kilograms");
 				prObject.set("liftWeight", liftWeight);
-			}
-			else {
-				var convertedWeight = liftWeight/2.2046;
+			} else {
+				var convertedWeight = liftWeight / 2.2046;
 				prObject.set("liftMetric", "pounds");
 				prObject.set("liftWeight", convertedWeight);
 			}
 
 			var currentUser = Parse.User.current();
-				if (currentUser) {
-					prObject.set('user', currentUser);
-				} else {
-					err = true;
+			if (currentUser) {
+				prObject.set('user', currentUser);
+			} else {
+				err = true;
 			}
 
 
 
-			if(err === true){
+			if (err === true) {
 				console.log('there was an error')
-			}
-			else { 
+			} else {
 				prObject.set("liftName", liftName);
 
 				prObject.save(null, {
@@ -247,12 +275,12 @@ document.getElementById('pr-submit').addEventListener('click', function(e) {
 						document.getElementById('alert').innerHTML = 'There was a problem creating the PR.'
 					}
 				});
-			}	
+			}
 		},
 		error: function(error) {
 			console.log('There was an error creating the lift.')
 		}
-	});	
+	});
 });
 
 //Settings Page
@@ -280,9 +308,3 @@ kgSetting.addEventListener('click', function(e) {
 		weightSetting: 'kilograms'
 	});
 });
-
-
-
-
-
-
