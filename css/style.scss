@@ -1,0 +1,76 @@
+@import 'variables';
+
+#wrapper {
+	max-width: 400px;
+	margin: 0 auto;
+	border: 1px solid $neutral-light;
+}
+
+#dashboardPage, #loginPage, #alert, #logout, #settingsPage {
+	display: none;
+}
+
+.hidden {
+	display: none;
+}
+
+input {
+	margin-bottom: 1em;
+}
+
+header {
+	border-bottom: 1px solid $neutral-light;
+	overflow: hidden;
+	padding: .625em;
+	margin-bottom: 1.25em;
+	
+	.settings {
+		float: right;
+		font-size: 2em;
+		color: $neutral-light;
+		display: inline-block;
+		vertical-align: middle;
+	}
+
+	.logo{
+		display: inline-block;
+		vertical-align: middle;
+		height: 2em;
+		line-height: 2em;
+	}
+}
+
+#register {
+	padding: 1em;
+
+	button {
+		width: 100%;
+	}
+}
+
+.login-text {
+	text-align: center;
+
+	span:first-child {
+		margin-right: 1em;
+	}
+}
+
+#dashboardPage {
+	#pr-modal {
+		width: 100%;
+
+		span {
+			margin-right: 1em;
+			font-size: 1em;
+		}
+	}
+
+	.btn-group {
+		width: 100%;
+		margin-bottom: 1em;
+		button {
+			width: 50%;
+		}
+	}
+}

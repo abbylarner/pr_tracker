@@ -1,0 +1,53 @@
+#wrapper {
+  max-width: 400px;
+  margin: 0 auto;
+  border: 1px solid #ccc; }
+
+#dashboardPage, #loginPage, #alert, #logout, #settingsPage {
+  display: none; }
+
+.hidden {
+  display: none; }
+
+input {
+  margin-bottom: 1em; }
+
+header {
+  border-bottom: 1px solid #ccc;
+  overflow: hidden;
+  padding: .625em;
+  margin-bottom: 1.25em; }
+  header .settings {
+    float: right;
+    font-size: 2em;
+    color: #ccc;
+    display: inline-block;
+    vertical-align: middle; }
+  header .logo {
+    display: inline-block;
+    vertical-align: middle;
+    height: 2em;
+    line-height: 2em; }
+
+#register {
+  padding: 1em; }
+  #register button {
+    width: 100%; }
+
+.login-text {
+  text-align: center; }
+  .login-text span:first-child {
+    margin-right: 1em; }
+
+#dashboardPage #pr-modal {
+  width: 100%; }
+  #dashboardPage #pr-modal span {
+    margin-right: 1em;
+    font-size: 1em; }
+#dashboardPage .btn-group {
+  width: 100%;
+  margin-bottom: 1em; }
+  #dashboardPage .btn-group button {
+    width: 50%; }
+
+/*# sourceMappingURL=style.css.map */

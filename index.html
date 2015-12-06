@@ -1,0 +1,115 @@
+<!DOCTYPE>
+<html>
+	<head>
+		<title>PR Tracker</title>
+		<!-- Latest compiled and minified CSS -->
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+
+		<link rel="stylesheet" href="css/style.css">
+
+	</head>
+	<body>
+		<div id="wrapper">
+			<header>
+				<a href="#dashboardPage" class="logo" id="logo">PR Tracker</a>
+				<a href="#settingsPage" class="settings glyphicon glyphicon-cog" id="settings"></a>
+				<a id="logout">Logout</a>
+			</header>
+			<main>
+				<div class="container-fluid">
+				<div class="alert alert-danger" id="alert">
+				</div>
+					<div id="registerPage" class="page">
+						<div class="row">
+							<div class="col-xs-8 col-xs-offset-2">
+								<form method="POST" id="register">
+									<input type="text" placeholder="Email Address" id="register-email" class="form-control">
+									<input type="password" placeholder="Password" id="register-password" class="form-control">
+									<button type="submit" id="register-submit" class="btn btn-primary">Sign Up</button>
+								</form>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-xs-8 col-xs-offset-2">
+								<div class="login-text">
+									<span>Already have an account?</span><span class="btn btn-default" id="login">Login</span>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div id="loginPage" class="page">
+						<div class="row">
+							<div class="col-xs-8 col-xs-offset-2">
+								<form method="POST" id="register">
+									<input type="text" placeholder="Email Address" id="login-email" class="form-control">
+									<input type="password" placeholder="Password" id="login-password" class="form-control">
+									<button type="submit" id="login-submit" class="btn btn-primary">Login</button>
+								</form>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-xs-8 col-xs-offset-2">
+								<div class="login-text">
+									<span>Don't have an account?</span><span class="btn btn-default" id="signUp">Sign Up</span>
+								</div>
+							</div>
+						</div>	
+					</div>
+					<div id="dashboardPage" class="page">
+						<div class="row">
+							<div class="col-xs-12">
+								<!-- Button trigger modal -->
+								<button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#addPr" id="pr-modal">
+									<span class="glyphicon glyphicon glyphicon-plus-sign"></span>Add New PR 
+								</button>
+								<div id="results"></div>
+								<!-- Modal -->
+								<div class="modal fade" id="addPr" tabindex="-1" role="dialog" aria-labelledby="addNewPr">
+								  <div class="modal-dialog" role="document">
+								    <div class="modal-content">
+								      <div class="modal-header">
+								        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+								        <h4 class="modal-title" id="myModalLabel">Add New PR</h4>
+								      </div>
+								      <div class="modal-body">
+								       	<form action="POST" id="newPr">
+								       		<input type="text" placeholder="Lift Name" id="liftName" class="form-control">
+								       		<div class="btn-group" role="group">
+											  <button type="button" class="btn btn-default active" id="new-kilograms">Kilograms</button>
+											  <button type="button" class="btn btn-default" id="new-pounds">Pounds</button>
+											</div>
+											<input type="text" id="liftWeight" class="form-control" placeholder="Enter Weight Amount">
+											<input type="date" id="prDate" class="form-control">
+								       	</form>
+								      </div>
+								      <div class="modal-footer">
+								        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+								        <button type="submit" id="pr-submit" class="btn btn-primary">Submit</button>
+								      </div>
+								    </div>
+								  </div>
+								</div>
+							</div>
+						</div>	
+					</div>
+					<div id="settingsPage" class="page">
+						<div class="row">
+							<div class="col-xs-12">
+								<div class="btn-group" role="group">
+								  <button type="button" class="btn btn-default" id="settings-kg">Kilograms</button>
+								  <button type="button" class="btn btn-default" id="settings-lbs">Pounds</button>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</main>
+		</div>
+		<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+	  	<script type="text/javascript" src="http://www.parsecdn.com/js/parse-latest.js"></script>
+		<!-- Latest compiled and minified JavaScript -->
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+		<script type="text/javascript" src="js/main.js"></script>
+		
+	</body>
+</html>
