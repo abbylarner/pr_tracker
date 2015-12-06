@@ -105,7 +105,8 @@ document.getElementById('logo').addEventListener('click', function(e) {
 	findPrs();
 	document.body.scrollTop = document.documentElement.scrollTop = 0;
 	document.getElementById('dashboardPage').style.display = 'block';
-
+	document.getElementById('percentage-input').value = '';
+	document.getElementById('calc-results').innerHTML = ''
 	//Prevent anchor jump on dashboard
 	if (currentPageHash) {
 		setTimeout(function() {
@@ -125,15 +126,15 @@ function findPrs() {
 			for (var i = 0; i < results.length; i++) {
 				var object = results[i];
 				if (object.get('user').get('weightSetting') === 'kilograms') {
-					prResults += '<div class="pr-item" data-id="' + object.id + '"><h3>' + object.get('liftName') + ' </h3><p> ' + object.get('liftWeight') + ' kg</p><p>' + object.get('prDate') + '</div>'
+					prResults += '<div class="pr-item" data-id="' + object.id + '"><h3>' + object.get('liftName') + ' </h3><p> ' + parseFloat((object.get('liftWeight')*100)/100).toFixed(2) + ' kg</p><p>' + object.get('prDate') + '</div>'
 				} else {
-					prResults += '<div class="pr-item"><h3>' + object.get('liftName') + ' </h3><p>' + parseFloat((object.get('liftWeight') * 2.2046 * 100) / 100).toFixed(2) + ' lbs</p>' + object.get('prDate') + '</div>'
-				}
+					prResults += '<div class="pr-item" data-id="' + object.id + '"><h3>' + object.get('liftName') + ' </h3><p> ' + parseFloat((object.get('liftWeight') * 2.2046 * 100) / 100).toFixed(2) + ' lbs</p><p>' + object.get('prDate') + '</div>'
+				}	
 			}
 			document.getElementById('results').innerHTML = prResults
 
 
-			//Internal Pagesa
+			//Internal Pages
 			var prItems = document.getElementsByClassName('pr-item');
 
 			for (i = 0; i < prItems.length; i++) {
@@ -146,14 +147,63 @@ function findPrs() {
 
 					for (i = 0; i < results.length; i++) {
 						var object = results[i];
-
 						if (object.id === this.dataset.id) {
-							document.getElementById('title').innerHTML = object.get('liftName');
+
+							document.getElementById('title').innerHTML = object.get('liftName')
+
+							var query = new Parse.Query('User');
+
+							query.get(Parse.User.current().id, {
+							  success: function(user) {
+							    var weightSetting = user.get('weightSetting');
+
+							    if(weightSetting === 'kilograms'){
+									document.getElementById('currentPr').innerHTML = '<p>' + parseFloat((object.get('liftWeight')*100)/100).toFixed(2) + " kg</p><p>" + object.get('prDate')
+								}
+								else {
+									document.getElementById('currentPr').innerHTML = '<p>' + parseFloat((object.get('liftWeight') * 2.2046 * 100) / 100).toFixed(2) + " lbs</p><p>" + object.get('prDate')			
+								}
+							  },
+							  error: function(object, error) {
+							    console.log('There was an error.')
+							  }
+							});
+
 						}
 					}
 
 				});
 			}
+
+			//Calculate percentage
+			document.getElementById('calc-submit').addEventListener('click', function(e){
+				e.preventDefault();
+
+				var percentage = parseFloat(document.getElementById('percentage-input').value);
+				var query = new Parse.Query('User');
+
+				query.get(Parse.User.current().id, {
+				  success: function(user) {
+				    var weightSetting = user.get('weightSetting');
+
+				    if(weightSetting === 'kilograms'){
+				    	var kgWeight = parseFloat((object.get('liftWeight')*100)/100).toFixed(2)
+						document.getElementById('calc-results').innerHTML = parseFloat(kgWeight*(percentage/100)).toFixed(2) + ' kg'
+					}
+					else {
+						var lbWeight = parseFloat((object.get('liftWeight') * 2.2046 * 100) / 100).toFixed(2);
+						console.log(lbWeight);
+						document.getElementById('calc-results').innerHTML = parseFloat(lbWeight*(percentage/100)).toFixed(2) + ' lbs'			
+					}
+				  },
+				  error: function(object, error) {
+				    console.log('There was an error.')
+				  }
+				});
+
+
+			});
+
 
 		},
 		error: function(error) {
@@ -300,6 +350,9 @@ lbSetting.addEventListener('click', function(e) {
 	currentUser.save({
 		weightSetting: 'pounds'
 	});
+
+	document.getElementById('percentage-input').value = '';
+	document.getElementById('calc-results').innerHTML = ''
 });
 kgSetting.addEventListener('click', function(e) {
 	kgSetting.classList.add('active');
@@ -307,4 +360,9 @@ kgSetting.addEventListener('click', function(e) {
 	currentUser.save({
 		weightSetting: 'kilograms'
 	});
+
+	document.getElementById('percentage-input').value = '';
+	document.getElementById('calc-results').innerHTML = ''
 });
+
+
