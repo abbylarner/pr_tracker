@@ -60,7 +60,7 @@ document.getElementById('register-submit').addEventListener('click', function(e)
 
 document.getElementById('login').addEventListener('click', function(e) {
 	hidePages();
-	logout();
+	document.getElementById('loginPage').style.display = 'block';
 });
 
 document.getElementById('login-submit').addEventListener('click', function(e) {
@@ -82,6 +82,11 @@ document.getElementById('login-submit').addEventListener('click', function(e) {
 	});
 });
 
+document.getElementById('signUp').addEventListener('click', function(e) {
+	hidePages();
+	document.getElementById('registerPage').style.display = 'block';
+});
+
 //Logout 
 document.getElementById('logout').addEventListener('click', function(e) {
 	Parse.User.logOut();
@@ -95,7 +100,13 @@ var currentUser = Parse.User.current();
 if (currentUser) {
 	hidePages();
 	logout();
-	document.getElementById(currentPageId).style.display = 'block';
+	if(!currentPageId){
+		document.getElementById('dashboardPage').style.display = 'block';
+	}
+	else {
+			document.getElementById(currentPageId).style.display = 'block';
+
+	}
 	findPrs();
 }
 
@@ -253,6 +264,35 @@ function findPrs() {
 								}
 
 							});
+
+							var matchQuery = new Parse.Query('prObject');
+							matchQuery.equalTo('user', currentUser);
+							matchQuery.include('user');
+							var prLog = '';
+							matchQuery.find({
+								success: function(results) {
+									for(i = 0; i < results.length; i++){
+										var object = results[i];
+										if (object.get('liftName') === liftNameMatch) {
+											if(object.get('user').get('weightSetting') === 'kilograms'){
+												prLog += '<p>' + parseFloat((object.get('liftWeight')*100)/100).toFixed(2) + 'kg</p><p>' + object.get('prDate') + '</p>'
+											}
+											else {
+												prLog += '<p>' + parseFloat((object.get('liftWeight') * 2.2046 * 100) / 100).toFixed(2)	 + 'lbs</p><p>' + object.get('prDate') + '</p>'
+
+											}
+											
+										}
+										
+									}
+									document.getElementById('prLog').innerHTML = prLog
+								},
+								error: function(error) {
+									alert('There was an error');
+								}
+							});
+
+							
 						}
 
 				});
