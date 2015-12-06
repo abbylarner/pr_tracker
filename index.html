@@ -118,8 +118,37 @@
 								</div> 
 								<div id="currentPr">
 								</div>
-								<button type="submit" id="pr-update" class="btn btn-primary">Update PR</button>
 							</div>
+						</div>
+						<!-- Button trigger modal -->
+						<button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#updatePr" id="update-modal">
+						Update PR
+						</button>
+						<div id="results"></div>
+						<!-- Modal -->
+						<div class="modal fade" id="updatePr" tabindex="-1" role="dialog" aria-labelledby="addNewPr">
+						  <div class="modal-dialog" role="document">
+						    <div class="modal-content">
+						      <div class="modal-header">
+						        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+						        <h4 class="modal-title" id="myModalLabel">Update PR</h4>
+						      </div>
+						      <div class="modal-body">
+						       	<form method="POST" id="newPr">
+						       		<div class="btn-group" role="group">
+									  <button type="button" class="btn btn-default active" id="update-kilograms">Kilograms</button>
+									  <button type="button" class="btn btn-default" id="update-pounds">Pounds</button>
+									</div>
+									<input type="text" id="liftWeightUpdate" class="form-control" placeholder="Enter Weight Amount">
+									<input type="date" id="prDateUpdate" class="form-control">
+						       	</form>
+						      </div>
+						      <div class="modal-footer">
+						        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+						        <button type="submit" id="update-submit" class="btn btn-primary">Submit</button>
+						      </div>
+						    </div>
+						  </div>
 						</div>
 					</div>
 				</div>

@@ -115,6 +115,8 @@ document.getElementById('logo').addEventListener('click', function(e) {
 	}
 });
 
+var match = false;
+
 //Get user PR's
 function findPrs() {
 	var prResults = '';
@@ -139,6 +141,7 @@ function findPrs() {
 
 			for (i = 0; i < prItems.length; i++) {
 				var prObject = prItems[i];
+				var liftNameMatch
 
 				prObject.addEventListener('click', function(e) {
 					hidePages();
@@ -148,6 +151,8 @@ function findPrs() {
 					for (i = 0; i < results.length; i++) {
 						var object = results[i];
 						if (object.id === this.dataset.id) {
+							var match = true;
+							var liftNameMatch = object.get('liftName');
 
 							document.getElementById('title').innerHTML = object.get('liftName')
 
@@ -168,12 +173,92 @@ function findPrs() {
 							    console.log('There was an error.')
 							  }
 							});
-
 						}
 					}
+					if(match === true){
+
+							//Update PR
+							var kilograms = document.getElementById('update-kilograms');
+							var pounds = document.getElementById('update-pounds');
+
+							pounds.addEventListener('click', function(e) {
+								pounds.classList.add('active');
+								kilograms.classList.remove('active');
+							});
+							kilograms.addEventListener('click', function(e) {
+								kilograms.classList.add('active');
+								pounds.classList.remove('active');
+							});
+
+							document.getElementById('update-submit').addEventListener('click', function(e){
+								e.preventDefault();
+								console.log('update');
+								var err = false;
+								var PrObject = Parse.Object.extend("prObject");
+								var prObject = new PrObject();
+								var liftName = liftNameMatch;
+								console.log(liftName);
+								var prDate = Date.parse(document.getElementById('prDateUpdate').value);
+								var liftWeight = parseFloat(document.getElementById('liftWeightUpdate').value);
+
+								function isEmpty(str) {
+									return str.replace(/^\s+|\s+$/g, '').length == 0;
+								}
+
+								if (hasClass(kilograms, 'active') === true) {
+									prObject.set("liftMetric", "kilograms");
+								} else {
+									var convertedWeight = parseFloat((liftWeight / 2.2046 * 100) / 100).toFixed(2);
+									prObject.set("liftMetric", "pounds");
+								}
+
+								if (isNaN(prDate) === false) {
+									var prD = new Date(prDate);
+									prObject.set("prDate", prD);
+								} else {
+									err = true;
+								}
+
+								if (liftWeight === null || isNaN(liftWeight)) {
+									err = true
+								} else if (hasClass(kilograms, 'active') === true) {
+									prObject.set("liftMetric", "kilograms");
+									prObject.set("liftWeight", liftWeight);
+								} else {
+									var convertedWeight = liftWeight / 2.2046;
+									prObject.set("liftMetric", "pounds");
+									prObject.set("liftWeight", convertedWeight);
+								}
+
+								var currentUser = Parse.User.current();
+								if (currentUser) {
+									prObject.set('user', currentUser);
+								} else {
+									err = true;
+								}
+
+								if (err === true) {
+									console.log('there was an error')
+								} else {
+									prObject.set("liftName", liftName);
+
+									prObject.save(null, {
+										success: function(prObject) {
+											$('#updatePr').modal('hide');
+										},
+										error: function(prObject, error) {
+											document.getElementById('alert').innerHTML = 'There was a problem creating the PR.'
+										}
+									});
+								}
+
+							});
+						}
 
 				});
 			}
+
+		
 
 			//Calculate percentage
 			document.getElementById('calc-submit').addEventListener('click', function(e){
@@ -210,7 +295,6 @@ function findPrs() {
 			alert("Error: " + error.code + " " + error.message);
 		}
 	});
-	query.descending("liftName");
 }
 
 //User set settings on refresh
@@ -364,5 +448,4 @@ kgSetting.addEventListener('click', function(e) {
 	document.getElementById('percentage-input').value = '';
 	document.getElementById('calc-results').innerHTML = ''
 });
-
 
