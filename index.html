@@ -10,13 +10,12 @@
 	</head>
 	<body>
 		<div id="wrapper">
-			<header>
-				<a href="#dashboardPage" class="logo" id="logo">PR Tracker</a>
-				<a href="#settingsPage" class="settings glyphicon glyphicon-cog" id="settings"></a>
-				<a id="logout">Logout</a>
-			</header>
+			<nav>
+				<a href="#dashboardPage" class="logo" id="logo">Oly Log</a>
+				<a href="" id="logout">Logout</a>
+				<a href="#settingsPage" class="settings" id="settings">Settings</a>
+			</nav>
 			<main>
-				<div class="container-fluid">
 				<div class="alert alert-danger" id="alert">
 				</div>
 					<div id="registerPage" class="page">
@@ -60,7 +59,7 @@
 							<div class="col-xs-12">
 								<!-- Button trigger modal -->
 								<button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#addPr" id="pr-modal">
-									<span class="glyphicon glyphicon glyphicon-plus-sign"></span>Add New PR 
+									Add New PR 
 								</button>
 								<div id="results"></div>
 								<!-- Modal -->
@@ -92,6 +91,7 @@
 							</div>
 						</div>	
 					</div>
+				<div class="container-fluid">
 					<div id="settingsPage" class="page">
 						<div class="row">
 							<div class="col-xs-12">
@@ -110,23 +110,31 @@
 								<div class="calculate">
 									<p>Calculate a percentage of your max</p>
 									<form method="POST" id="percentage">
-										<input type="number" placeholder="Enter Percentage" id="percentage-input">
+										<input type="number" placeholder="%" id="percentage-input">
 										<button type="submit" id="calc-submit" class="btn btn-primary">Submit</button>
 									</form>
 									<div id="calc-results">
 									</div>
 								</div> 
-								<div id="currentPr">
+								<h1>Current PR</h1>
+								<div class="max">
+									<div id="currentPr">
+									</div>
 								</div>
-							</div>
-						</div>
+							
+						
 						<!-- Button trigger modal -->
 						<button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#updatePr" id="update-modal">
 						Update PR
 						</button>
+						<div class="pr-wrapper">
+						<h1>PR Log</h1>
 						<div id="prLog">
 						</div>
+</div>
 						<div id="results"></div>
+						</div>
+						</div>
 						<!-- Modal -->
 						<div class="modal fade" id="updatePr" tabindex="-1" role="dialog" aria-labelledby="addNewPr">
 						  <div class="modal-dialog" role="document">

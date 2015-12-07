@@ -17,8 +17,13 @@ function hidePages() {
 }
 
 function logout() {
-	document.getElementById('logout').style.display = 'block';
+	document.getElementById('logout').style.display = 'inline-block';
 }
+
+function convertDate(){
+	
+}
+
 
 
 //Sign Up
@@ -72,12 +77,14 @@ document.getElementById('login-submit').addEventListener('click', function(e) {
 		success: function(user) {
 			hidePages();
 			logout();
+			findPrs();
 			document.getElementById('dashboardPage').style.display = 'block';
 		},
 		error: function(user, error) {
 			document.getElementById('alert').innerHTML = 'There was an error with the login.'
 		}
 	});
+	
 });
 
 document.getElementById('signUp').addEventListener('click', function(e) {
@@ -136,10 +143,20 @@ function findPrs() {
 		success: function(results) {
 			for (var i = 0; i < results.length; i++) {
 				var object = results[i];
+				var prDate = object.get('prDate');
+				var prD = new Date(prDate);
+				var months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+				var month = months[prD.getMonth()]
+				var year = prD.getFullYear();
+				var day = prD.getDate() + 1;
+
+				var dateConverted = month + ' ' + day + ' ' + year;
+
+
 				if (object.get('user').get('weightSetting') === 'kilograms') {
-					prResults += '<div class="pr-item" data-id="' + object.id + '"><h3>' + object.get('liftName') + ' </h3><p> ' + parseFloat((object.get('liftWeight')*100)/100).toFixed(2) + ' kg</p><p>' + object.get('prDate') + '</div>'
+					prResults += '<div class="pr-item" data-id="' + object.id + '"><h1>' + object.get('liftName') + ' </h1><p> ' + parseFloat((object.get('liftWeight')*100)/100).toFixed(2) + ' kg</p><p>' + dateConverted + '<div class="glyphicon glyphicon-menu-right"></div></div>'
 				} else {
-					prResults += '<div class="pr-item" data-id="' + object.id + '"><h3>' + object.get('liftName') + ' </h3><p> ' + parseFloat((object.get('liftWeight') * 2.2046 * 100) / 100).toFixed(2) + ' lbs</p><p>' + object.get('prDate') + '</div>'
+					prResults += '<div class="pr-item" data-id="' + object.id + '"><h1>' + object.get('liftName') + ' </h1><p> ' + parseFloat((object.get('liftWeight') * 2.2046 * 100) / 100).toFixed(2) + ' lbs</p><p>' + dateConverted + '</div>'
 				}	
 			}
 			document.getElementById('results').innerHTML = prResults
@@ -158,7 +175,17 @@ function findPrs() {
 					document.getElementById('internalPage').style.display = 'block';
 
 					for (i = 0; i < results.length; i++) {
+
 						var object = results[i];
+						var prDate = object.get('prDate');
+						var prD = new Date(prDate);
+						var months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+						var month = months[prD.getMonth()]
+						var year = prD.getFullYear();
+						var day = prD.getDate() + 1;
+
+						var dateConverted = month + ' ' + day + ' ' + year;
+
 						if (object.id === this.dataset.id) {
 							var match = true;
 							var liftNameMatch = object.get('liftName');
@@ -172,10 +199,10 @@ function findPrs() {
 							    var weightSetting = user.get('weightSetting');
 
 							    if(weightSetting === 'kilograms'){
-									document.getElementById('currentPr').innerHTML = '<p>' + parseFloat((object.get('liftWeight')*100)/100).toFixed(2) + " kg</p><p>" + object.get('prDate')
+									document.getElementById('currentPr').innerHTML = '<p>' + parseFloat((object.get('liftWeight')*100)/100).toFixed(2) + " kg</p><p>" + dateConverted + '</p>'
 								}
 								else {
-									document.getElementById('currentPr').innerHTML = '<p>' + parseFloat((object.get('liftWeight') * 2.2046 * 100) / 100).toFixed(2) + " lbs</p><p>" + object.get('prDate')			
+									document.getElementById('currentPr').innerHTML = '<p>' + parseFloat((object.get('liftWeight') * 2.2046 * 100) / 100).toFixed(2) + " lbs</p><p>" + dateConverted + '</p>'		
 								}
 							  },
 							  error: function(object, error) {
@@ -207,7 +234,6 @@ function findPrs() {
 								var prObject = new PrObject();
 								var liftName = liftNameMatch;
 								console.log(liftName);
-								var prDate = Date.parse(document.getElementById('prDateUpdate').value);
 								var liftWeight = parseFloat(document.getElementById('liftWeightUpdate').value);
 
 								function isEmpty(str) {
@@ -222,7 +248,6 @@ function findPrs() {
 								}
 
 								if (isNaN(prDate) === false) {
-									var prD = new Date(prDate);
 									prObject.set("prDate", prD);
 								} else {
 									err = true;
@@ -269,14 +294,22 @@ function findPrs() {
 							var prLog = '';
 							matchQuery.find({
 								success: function(results) {
+
 									for(i = 0; i < results.length; i++){
 										var object = results[i];
+										var prDate = object.get('prDate');
+										var prD = new Date(prDate);
+										var months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+										var month = months[prD.getMonth()]
+										var year = prD.getFullYear();
+										var day = prD.getDate() + 1;
+
 										if (object.get('liftName') === liftNameMatch) {
 											if(object.get('user').get('weightSetting') === 'kilograms'){
-												prLog += '<p>' + parseFloat((object.get('liftWeight')*100)/100).toFixed(2) + 'kg</p><p>' + object.get('prDate') + '</p>'
+												prLog += '<p>' + parseFloat((object.get('liftWeight')*100)/100).toFixed(2) + 'kg</p><p>' + dateConverted + '</p>'
 											}
 											else {
-												prLog += '<p>' + parseFloat((object.get('liftWeight') * 2.2046 * 100) / 100).toFixed(2)	 + 'lbs</p><p>' + object.get('prDate') + '</p>'
+												prLog += '<p>' + parseFloat((object.get('liftWeight') * 2.2046 * 100) / 100).toFixed(2)	 + 'lbs</p><p>' + dateConverted + '</p>'
 
 											}
 											
@@ -308,8 +341,11 @@ function findPrs() {
 				query.get(Parse.User.current().id, {
 				  success: function(user) {
 				    var weightSetting = user.get('weightSetting');
+				    if(isNaN(percentage)){
+				    	console.log('Not a proper input');
+				    }
 
-				    if(weightSetting === 'kilograms'){
+				    else if (weightSetting === 'kilograms'){
 				    	var kgWeight = parseFloat((object.get('liftWeight')*100)/100).toFixed(2)
 						document.getElementById('calc-results').innerHTML = parseFloat(kgWeight*(percentage/100)).toFixed(2) + ' kg'
 					}
@@ -394,8 +430,7 @@ document.getElementById('pr-submit').addEventListener('click', function(e) {
 				var object = results[i];
 				var liftResult = object.get('liftName').toLowerCase();
 				var inputResult = liftName.toLowerCase();
-
-				if (liftResult === inputResult || isEmpty(inputResult)) {
+				if (liftResult === inputResult || inputResult.length === 0) {
 					err = true;
 				}
 			}
@@ -409,6 +444,7 @@ document.getElementById('pr-submit').addEventListener('click', function(e) {
 
 			if (isNaN(prDate) === false) {
 				var prD = new Date(prDate);
+
 				prObject.set("prDate", prD);
 			} else {
 				err = true;

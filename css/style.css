@@ -1,7 +1,38 @@
+@import url(https://fonts.googleapis.com/css?family=Work+Sans:400,300|Montserrat:700);
+body {
+  background-color: #efefef;
+  font-family: 'Work Sans', Helvetica, sans-serif;
+  font-weight: 300; }
+
+h1 {
+  font-family: 'Montserrat', Helvetica, sans-serif;
+  text-transform: uppercase;
+  font-size: 1.25em;
+  margin-bottom: .05em;
+  margin-top: 0; }
+
+p {
+  margin-bottom: .05em; }
+
+.form-control {
+  border-radius: 0; }
+
+.btn-default {
+  border-radius: 0; }
+
+.btn-primary {
+  background-color: #2A9D8F;
+  border: none;
+  border-radius: 0; }
+  .btn-primary:hover, .btn-primary:active, .btn-primary:focus {
+    background-color: #2da99a; }
+
 #wrapper {
+  background-color: #fff;
   max-width: 400px;
   margin: 0 auto;
-  border: 1px solid #ccc; }
+  border: 1px solid #ccc;
+  min-height: 500px; }
 
 #dashboardPage, #loginPage, #alert, #logout, #settingsPage, #internalPage {
   display: none; }
@@ -12,22 +43,36 @@
 input {
   margin-bottom: 1em; }
 
-header {
-  border-bottom: 1px solid #ccc;
+nav {
   overflow: hidden;
   padding: .625em;
-  margin-bottom: 1.25em; }
-  header .settings {
+  margin-bottom: 1.25em;
+  background-color: #264653; }
+  nav a {
+    margin-right: 15px;
+    color: #fff; }
+    nav a:hover, nav a:focus, nav a:active {
+      color: #fff;
+      text-decoration: none;
+      border-bottom: 2px solid #fff; }
+  nav .settings, nav #logout {
     float: right;
-    font-size: 2em;
-    color: #ccc;
     display: inline-block;
-    vertical-align: middle; }
-  header .logo {
+    margin: .70em; }
+  nav .logo {
     display: inline-block;
     vertical-align: middle;
     height: 2em;
-    line-height: 2em; }
+    line-height: 2em;
+    font-family: 'Montserrat', Helvetica, sans-serif;
+    text-transform: uppercase;
+    font-size: 1.5em; }
+    nav .logo:hover {
+      border: none; }
+
+#pr-modal {
+  text-transform: uppercase;
+  font-size: 1.5em; }
 
 #register {
   padding: 1em; }
@@ -40,7 +85,9 @@ header {
     margin-right: 1em; }
 
 #dashboardPage #pr-modal {
-  width: 100%; }
+  width: 90%;
+  margin-left: 5%;
+  margin-bottom: 1em; }
   #dashboardPage #pr-modal span {
     margin-right: 1em;
     font-size: 1em; }
@@ -48,6 +95,74 @@ header {
   width: 100%;
   margin-bottom: 1em; }
   #dashboardPage .btn-group button {
+    width: 50%; }
+
+.pr-item {
+  border-bottom: 1px solid #efefef;
+  padding: 1em;
+  position: relative;
+  cursor: pointer; }
+  .pr-item:first-child {
+    border-top: 1px solid #efefef; }
+  .pr-item:hover {
+    background-color: #f7f7f7; }
+  .pr-item .glyphicon {
+    position: absolute;
+    right: 1em;
+    top: 2.7em; }
+
+#internalPage h1 {
+  padding-bottom: 1em;
+  margin-bottom: 1em;
+  border-bottom: 1px solid #efefef; }
+#internalPage form {
+  background-color: #efefef;
+  margin-top: 1rem;
+  margin-bottom: 3rem; }
+#internalPage .calculate {
+  position: relative; }
+  #internalPage .calculate #percentage-input {
+    width: 50%;
+    padding: 0 .25em;
+    font-size: 4rem;
+    margin-bottom: 0; }
+  #internalPage .calculate #calc-submit {
+    width: 50%;
+    height: 61px; }
+  #internalPage .calculate #calc-results {
+    position: absolute;
+    font-size: 4rem;
+    right: 1rem;
+    top: 6.25rem;
+    font-weight: 400; }
+#internalPage .max {
+  width: 50%;
+  float: left; }
+  #internalPage .max p:first-child {
+    font-weight: 400;
+    font-size: 2em; }
+  #internalPage .max button {
+    width: 50%; }
+#internalPage #update-modal {
+  width: 50%;
+  float: left;
+  box-sizing: border-box;
+  height: 61.3906px;
+  margin-bottom: 3em; }
+#internalPage .pr-wrapper {
+  clear: both;
+  padding-bottom: 3em; }
+  #internalPage .pr-wrapper p:first-child {
+    font-size: 2rem;
+    font-weight: 400; }
+  #internalPage .pr-wrapper p:nth-child(2) {
+    padding-bottom: 1em;
+    margin-bottom: 1em;
+    border-bottom: 1px solid #efefef; }
+
+#settingsPage .btn-group {
+  width: 100%; }
+  #settingsPage .btn-group button {
     width: 50%; }
 
 /*# sourceMappingURL=style.css.map */
