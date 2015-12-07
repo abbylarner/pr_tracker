@@ -18,6 +18,7 @@ function hidePages() {
 
 function logout() {
 	document.getElementById('logout').style.display = 'inline-block';
+	document.getElementById('settings').style.display = 'inline-block';
 }
 
 function convertDate(){
@@ -64,6 +65,8 @@ document.getElementById('register-submit').addEventListener('click', function(e)
 
 document.getElementById('login').addEventListener('click', function(e) {
 	hidePages();
+	document.getElementById('settings').style.display = 'none';
+	document.getElementById('logout').style.display = 'none';
 	document.getElementById('loginPage').style.display = 'block';
 });
 
@@ -89,6 +92,8 @@ document.getElementById('login-submit').addEventListener('click', function(e) {
 
 document.getElementById('signUp').addEventListener('click', function(e) {
 	hidePages();
+	document.getElementById('settings').style.display = 'none';
+	document.getElementById('logout').style.display = 'none';
 	document.getElementById('registerPage').style.display = 'block';
 });
 
@@ -96,7 +101,6 @@ document.getElementById('signUp').addEventListener('click', function(e) {
 document.getElementById('logout').addEventListener('click', function(e) {
 	Parse.User.logOut();
 	hidePages();
-	logout();
 	document.getElementById('loginPage').style.display = 'block';
 });
 

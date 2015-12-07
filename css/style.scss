@@ -45,7 +45,7 @@ p {
 	min-height: 500px;
 }
 
-#dashboardPage, #loginPage, #alert, #logout, #settingsPage, #internalPage {
+#dashboardPage, #loginPage, #alert, #logout, #settings, #settingsPage, #internalPage {
 	display: none;
 }
 
@@ -77,7 +77,7 @@ nav {
 	
 	.settings, #logout {
 		float: right;
-		display: inline-block;
+		display: none;
 		margin: .70em;
 	}
 
@@ -241,6 +241,21 @@ nav {
 		}
 	}
 
+}
+
+#updatePR {
+	form {
+		background-color: transparent;
+	}
+
+	.btn-group {
+		width: 100%;
+		margin-bottom: 1em;
+
+		button {
+			width: 50%;
+		}
+	}
 }
 
 #settingsPage {

@@ -34,7 +34,7 @@ p {
   border: 1px solid #ccc;
   min-height: 500px; }
 
-#dashboardPage, #loginPage, #alert, #logout, #settingsPage, #internalPage {
+#dashboardPage, #loginPage, #alert, #logout, #settings, #settingsPage, #internalPage {
   display: none; }
 
 .hidden {
@@ -57,7 +57,7 @@ nav {
       border-bottom: 2px solid #fff; }
   nav .settings, nav #logout {
     float: right;
-    display: inline-block;
+    display: none;
     margin: .70em; }
   nav .logo {
     display: inline-block;
@@ -159,6 +159,14 @@ nav {
     padding-bottom: 1em;
     margin-bottom: 1em;
     border-bottom: 1px solid #efefef; }
+
+#updatePR form {
+  background-color: transparent; }
+#updatePR .btn-group {
+  width: 100%;
+  margin-bottom: 1em; }
+  #updatePR .btn-group button {
+    width: 50%; }
 
 #settingsPage .btn-group {
   width: 100%; }
